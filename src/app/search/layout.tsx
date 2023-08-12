@@ -1,5 +1,9 @@
 import React from "react";
 
+export const metadata = {
+    title: "Search"
+};
+
 export default function layout({ children }: { children: React.ReactNode }) {
-    return <section className="markdown-body">{children}</section>;
+    return <div>{children}</div>;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function layout({ children }: { children: React.ReactNode }) {
-    return <div className="markdown-body">{children}</div>;
+    return <section className="markdown-body">{children}</section>;
 }
 
-// TODO: Finish other types as well
+// TODO: codecs "See the color information..." what is this suppose to mean

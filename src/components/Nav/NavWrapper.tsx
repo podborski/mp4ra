@@ -44,7 +44,24 @@ export default async function NavWrapper() {
         const name = capitalize(dir.replace(/-/g, " "));
 
         expandedMeta.menu["Registered Types"].items[name] = {
-            link: `/registered-types/${dir}`
+            link: `/registered-types/${dir}`,
+            priority: 1
+        };
+    });
+
+    // Extend with [type] dyanmic routes
+    const dynamicPaths = await import("../../app/registered-types/[type]/page").then((m) =>
+        m.MISC_TYPES.map((param) => ({
+            ...param,
+            link: `/registered-types/${param.type}`
+        }))
+    );
+    dynamicPaths.forEach((p) => {
+        if (!expandedMeta.menu["Registered Types"].items)
+            expandedMeta.menu["Registered Types"].items = {};
+
+        expandedMeta.menu["Registered Types"].items[p.title] = {
+            link: p.link
         };
     });
 

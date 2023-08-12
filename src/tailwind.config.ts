@@ -10,7 +10,8 @@ const config: Config = {
     theme: {
         screens: {
             xs: "400px",
-            ...defaultTheme.screens
+            ...defaultTheme.screens,
+            md: "820px"
         },
         extend: {
             colors: {

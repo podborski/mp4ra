@@ -3,13 +3,12 @@
 import { Fade as Hamburger } from "hamburger-react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { BsThreeDots } from "react-icons/bs";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
 import Link from "next/link";
 import { useMedia } from "react-use";
 import { usePathname } from "next/navigation";
-import type { Meta } from ".";
+import type { Meta, NavItem } from ".";
 
 const MetaContext = createContext<Meta>({} as Meta);
 
@@ -24,7 +23,7 @@ function Social({ className }: { className?: string }) {
                 rel="noreferrer"
                 target="_blank"
             >
-                <FaGithub />
+                <FaGithub className="text-2xl" />
             </a>
         </div>
     );
@@ -138,11 +137,7 @@ function MenuItemSmall({
 }: {
     children: React.ReactNode;
     link: string;
-    dropdown?: {
-        [key: string]: {
-            link: string;
-        };
-    };
+    dropdown?: NavItem["items"];
 }) {
     if (!dropdown)
         return (
@@ -161,11 +156,20 @@ function MenuItemSmall({
                 <FiChevronDown />
             </div>
             <Dropdown>
-                {Object.keys(dropdown).map((item) => (
-                    <MenuItem key={item} link={dropdown[item].link}>
-                        {item}
-                    </MenuItem>
-                ))}
+                {Object.keys(dropdown)
+                    .sort((a, b) => {
+                        // Highest priority first
+                        // Then alphabetical
+                        const aPriority = dropdown[a].priority || 0;
+                        const bPriority = dropdown[b].priority || 0;
+                        if (aPriority === bPriority) return a.localeCompare(b);
+                        return bPriority - aPriority;
+                    })
+                    .map((item) => (
+                        <MenuItem key={item} link={dropdown[item].link}>
+                            {item}
+                        </MenuItem>
+                    ))}
             </Dropdown>
         </div>
     );
@@ -218,17 +222,7 @@ export default function Nav(props: { meta: Meta }) {
                                 {item}
                             </MenuItemSmall>
                         ))}
-                        <div className="group relative inline-flex cursor-pointer items-center lg:hidden">
-                            <span className="transition-all duration-200 group-hover:brightness-50">
-                                <BsThreeDots size={18} />
-                            </span>
-                            <Dropdown className="gap-3">
-                                <div className="inline-flex items-center justify-center px-2">
-                                    <Social />
-                                </div>
-                            </Dropdown>
-                        </div>
-                        <Social className="hidden items-stretch lg:flex" />
+                        <Social className="items-stretch" />
                     </div>
                     <div className="inline-flex items-center md:hidden">
                         <Hamburger

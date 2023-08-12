@@ -1,20 +1,20 @@
 code,description,specification
 00,Forbidden,
-01,Systems ISO/IEC 14496-1 (<a href='#obj-a'>a</a>),MPEG-4
-02,Systems ISO/IEC 14496-1 (<a href='#obj-b'>b</a>),MPEG-4
+01,Systems ISO/IEC 14496-1 (1),MPEG-4
+02,Systems ISO/IEC 14496-1 (2),MPEG-4
 03,Interaction Stream,MPEG-4
-04,Extended BIFS (<a href='#obj-h'>h</a>),MPEG-4
-05,AFX Stream (<a href='#obj-i'>i</a>),MPEG-4
+04,Extended BIFS (8),MPEG-4
+05,AFX Stream (9),MPEG-4
 06,Font Data Stream,MPEG-4
 07,Synthetised Texture,MPEG-4
 08,Text Stream,MPEG-4
 09,LASeR Stream,MPEG-4
 0A,Simple Aggregation Format (SAF) Stream,MPEG-4
-20,Visual ISO/IEC 14496-2 (<a href='#obj-c'>c</a>),MPEG-4
-21,Visual ITU-T Recommendation H.264 | ISO/IEC 14496-10 (<a href='#obj-g'>g</a>),MPEG-4
-22,Parameter Sets for ITU-T Recommendation H.264 | ISO/IEC 14496-10 (<a href='#obj-g'>g</a>),MPEG-4
+20,Visual ISO/IEC 14496-2 (3),MPEG-4
+21,Visual ITU-T Recommendation H.264 | ISO/IEC 14496-10 (7),MPEG-4
+22,Parameter Sets for ITU-T Recommendation H.264 | ISO/IEC 14496-10 (7),MPEG-4
 23,Visual ISO/IEC 23008-2 | ITU-T Recommendation H.265,MPEG-4
-40,Audio ISO/IEC 14496-3 (<a href='#obj-d'>d</a>),MPEG-4
+40,Audio ISO/IEC 14496-3 (4),MPEG-4
 60,Visual ISO/IEC 13818-2 Simple Profile,MPEG-4
 61,Visual ISO/IEC 13818-2 Main Profile,MPEG-4
 62,Visual ISO/IEC 13818-2 SNR Profile,MPEG-4
@@ -28,7 +28,7 @@ code,description,specification
 6A,Visual ISO/IEC 11172-2,MPEG-4
 6B,Audio ISO/IEC 11172-3,MPEG-4
 6C,Visual ISO/IEC 10918-1,MPEG-4
-6D,Portable Network Graphics (<a href='#obj-f'>f</a>),PNG
+6D,Portable Network Graphics (6),PNG
 6E,Visual ISO/IEC 15444-1 (JPEG 2000),MPEG-4
 A0,EVRC Voice,3GPP2
 A1,SMV Voice,3GPP2
@@ -53,4 +53,4 @@ B3,DTS-UHD profile 3 or higher,DTS-UHD
 C0 - E0,user private,
 E1,13K Voice,3GPP2
 E2 - FE,user private,
-FF,no object type specified (<a href='#obj-e'>e</a>),MPEG-4
+FF,no object type specified (5),MPEG-4

@@ -10,111 +10,116 @@ import {
 } from "@tanstack/react-table";
 import clsx from "clsx";
 import { useState, useMemo } from "react";
-import type { ColumnFiltersState } from "@tanstack/react-table";
-import type { TableRowDef } from "@/types";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
+import type { ColumnFiltersState, Header } from "@tanstack/react-table";
 
-// TODO: Keywords to references
-export default function Table({ data }: { data: TableRowDef[] }) {
+function TableHeader({ header }: { header: Header<any, unknown> }) {
+    if (header.isPlaceholder) return null;
+    return (
+        <th key={header.id}>
+            <div
+                className={clsx(
+                    "flex items-center justify-center gap-1",
+                    header.column.getCanSort() && "cursor-pointer select-none"
+                )}
+                onClick={header.column.getToggleSortingHandler()}
+                onKeyDown={(e) => {
+                    const handler = header.column.getToggleSortingHandler();
+                    if (!handler) return;
+                    if (e.key === "Enter") handler(e);
+                }}
+                role="rowheader"
+                tabIndex={0}
+            >
+                {flexRender(header.column.columnDef.header, header.getContext())}
+                {{
+                    asc: <AiOutlineSortAscending />,
+                    desc: <AiOutlineSortDescending />
+                }[header.column.getIsSorted() as string] ?? null}
+            </div>
+            {header.column.getCanFilter() && (
+                <input
+                    className="w-full rounded border px-2 shadow-inner"
+                    list={`${header.column.id}list`}
+                    onChange={(e) => header.column.setFilterValue(e.target.value)}
+                    placeholder="Search..."
+                    type="text"
+                    value={(header.column.getFilterValue() ?? "") as string}
+                />
+            )}
+        </th>
+    );
+}
+
+export default function Table({ data, globalFilter }: { data: object[]; globalFilter?: string }) {
     // Generate columns
     const columnHelper = createColumnHelper<any>();
-    const columns = useMemo(
-        () =>
-            Object.keys(data[0]).map((header) => {
-                if (header === "code") {
-                    return columnHelper.accessor(header, {
-                        // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
-                        cell: (info) => <code>{info.getValue()}</code>
-                    });
-                }
+    const pathname = usePathname();
+    const columns = useMemo(() => {
+        // Get unique headers
+        const keys = new Set<string>();
+        data.forEach((row) => Object.keys(row).forEach((key) => keys.add(key)));
+
+        // Generate columns
+        return Array.from(keys).map((header) => {
+            if (header === "code") {
                 return columnHelper.accessor(header, {
                     // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
-                    cell: (info) => <div dangerouslySetInnerHTML={{ __html: info.getValue() }} />
+                    cell: (info) => info.getValue() && <code>{info.getValue()}</code>
                 });
-            }),
-        [columnHelper, data]
-    );
+            }
+            if (header === "specification" && pathname !== "/references") {
+                return columnHelper.accessor(header, {
+                    // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
+                    cell: (info) => {
+                        if (!info.getValue()) return null;
+                        return info.getValue().match(/\(.+\)/) ? (
+                            <i>{info.getValue()}</i>
+                        ) : (
+                            <Link href={`/references#${info.getValue()}`}>{info.getValue()}</Link>
+                        );
+                    }
+                });
+            }
+            return columnHelper.accessor(header, {
+                // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
+                cell: (info) => <div dangerouslySetInnerHTML={{ __html: info.getValue() }} />
+            });
+        });
+    }, [columnHelper, data, pathname]);
 
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const table = useReactTable({
         data,
         columns,
         state: {
-            columnFilters
+            columnFilters,
+            globalFilter
         },
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        getSortedRowModel: getSortedRowModel()
+        getSortedRowModel: getSortedRowModel(),
+        getRowId: (row, index) => (pathname === "/references" && row.specification) || index
     });
 
-    // TODO: Styling
-    // TODO: Global Filter
     return (
-        <div>
-            <table>
+        <div className="flex items-center justify-center">
+            <table className="w-full">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => (
-                                <th key={header.id}>
-                                    {header.isPlaceholder ? null : (
-                                        <>
-                                            <div
-                                                className={clsx(
-                                                    header.column.getCanSort() &&
-                                                        "cursor-pointer select-none"
-                                                )}
-                                                onClick={header.column.getToggleSortingHandler()}
-                                                onKeyDown={(e) => {
-                                                    const handler =
-                                                        header.column.getToggleSortingHandler();
-                                                    if (!handler) return;
-                                                    if (e.key === "Enter") handler(e);
-                                                }}
-                                                role="rowheader"
-                                                tabIndex={0}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef.header,
-                                                    header.getContext()
-                                                )}
-                                                {{
-                                                    asc: " 🔼",
-                                                    desc: " 🔽"
-                                                }[header.column.getIsSorted() as string] ?? null}
-                                            </div>
-                                            {header.column.getCanFilter() ? (
-                                                <div>
-                                                    <input
-                                                        className="w-36 rounded border shadow"
-                                                        list={`${header.column.id}list`}
-                                                        onChange={(e) =>
-                                                            header.column.setFilterValue(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        placeholder={`Search... (${
-                                                            header.column.getFacetedUniqueValues()
-                                                                .size
-                                                        })`}
-                                                        type="text"
-                                                        value={
-                                                            (header.column.getFilterValue() ??
-                                                                "") as string
-                                                        }
-                                                    />
-                                                </div>
-                                            ) : null}
-                                        </>
-                                    )}
-                                </th>
+                                <TableHeader key={header.id} header={header} />
                             ))}
                         </tr>
                     ))}
                 </thead>
                 <tbody>
                     {table.getRowModel().rows.map((row) => (
-                        <tr key={row.id}>
+                        <tr key={row.id} id={row.id}>
                             {row.getVisibleCells().map((cell) => (
                                 <td key={cell.id}>
                                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

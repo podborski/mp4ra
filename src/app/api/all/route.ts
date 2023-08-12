@@ -5,10 +5,11 @@ import { parse } from "csv/sync";
 import { NextResponse } from "next/server";
 import cleanRecords from "@/utils/misc";
 
+// FIXME: Do not expose this as we are gonna do csv mapping. Search library can be wrapped with a RSC
 // eslint-disable-next-line import/prefer-default-export
 export async function GET() {
-    const ignore = ["specifications", "unlisted", "knownduplicates", "-qt", "textualcontent"];
-    const boxes: object[] = [];
+    const ignore = ["unlisted", "knownduplicates"];
+    const all: object[] = [];
     const CSVs = await glob(path.join(process.cwd(), "..", "data", "*.csv"));
 
     CSVs.forEach((file) => {
@@ -18,8 +19,8 @@ export async function GET() {
             columns: true,
             skip_empty_lines: true
         });
-        boxes.push(...records);
+        all.push(...records);
     });
 
-    return NextResponse.json(cleanRecords(boxes, true));
+    return NextResponse.json(cleanRecords(all, true));
 }

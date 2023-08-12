@@ -5,7 +5,7 @@ import createMDX from "@next/mdx";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     output: "export",
-    pageExtensions: ["tsx", "mdx"],
+    pageExtensions: ["ts", "tsx", "mdx"],
     env: {
         BUILD_TIMESTAMP: new Date().toLocaleString("default", {
             month: "long",

@@ -1,10 +1,11 @@
 import NavWrapper from "./NavWrapper";
 
-type NavItem = {
+export type NavItem = {
     link: string;
     items?: {
         [key: string]: {
             link: string;
+            priority?: number;
         };
     };
 };
