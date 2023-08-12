@@ -95,7 +95,7 @@ function MenuItem({
 function Dropdown({ children, className }: { children: React.ReactNode; className?: string }) {
     return (
         <div
-            className={`invisible absolute right-0 top-12 z-30 float-left flex min-w-max flex-col rounded-xl border-1 border-neutral-700 bg-white p-3 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:top-14 ${className}`}
+            className={`invisible absolute right-0 top-12 z-30 float-left grid min-w-max translate-x-1/3 grid-cols-2 rounded-xl border-1 border-neutral-700 bg-white p-3 opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:top-14 ${className}`}
         >
             {children}
         </div>
