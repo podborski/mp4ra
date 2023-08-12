@@ -15,7 +15,7 @@ export default async function getData(): Promise<Record[]> {
 
     const ignore = ["unlisted", "knownduplicates"];
     const all: Record[] = [];
-    const CSVs = await glob(path.join(process.cwd(), "../../data/*.csv"));
+    const CSVs = await glob(path.join(process.cwd(), "../data/*.csv"));
 
     CSVs.forEach((file) => {
         if (ignore.some((i) => file.includes(i))) return;
