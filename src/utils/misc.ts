@@ -15,6 +15,15 @@ const clean = (dirty: string, strict: boolean) => {
     });
 };
 
+export const capitalize = (str: string) => {
+    if (str.length === 0) return str;
+    return str
+        .replace(/-/g, " ")
+        .split(" ")
+        .map((s) => s[0].toUpperCase() + s.slice(1))
+        .join(" ");
+};
+
 export default function cleanRecords(records: object[], strict: boolean = false) {
     // Sanitize data
     return records.map((record: object) => {

@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AiOutlineSortAscending, AiOutlineSortDescending } from "react-icons/ai";
 import type { ColumnFiltersState, Header } from "@tanstack/react-table";
+import { capitalize } from "@/utils/misc";
 
 function TableHeader({ header }: { header: Header<any, unknown> }) {
     if (header.isPlaceholder) return null;
@@ -70,6 +71,16 @@ export default function Table({ data, globalFilter }: { data: object[]; globalFi
                     cell: (info) => info.getValue() && <code>{info.getValue()}</code>
                 });
             }
+            if (header === "category") {
+                return columnHelper.accessor(header, {
+                    // eslint-disable-next-line react/no-unstable-nested-components
+                    cell: (info) => (
+                        <Link href={info.getValue()}>
+                            {capitalize(info.getValue().split("/").pop())}
+                        </Link>
+                    )
+                });
+            }
             if (header === "specification" && pathname !== "/references") {
                 return columnHelper.accessor(header, {
                     // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
@@ -104,6 +115,8 @@ export default function Table({ data, globalFilter }: { data: object[]; globalFi
         getSortedRowModel: getSortedRowModel(),
         getRowId: (row, index) => (pathname === "/references" && row.specification) || index
     });
+
+    if (globalFilter !== undefined && globalFilter.length < 2) return null;
 
     return (
         <div className="flex items-center justify-center">

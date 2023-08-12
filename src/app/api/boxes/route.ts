@@ -9,7 +9,7 @@ import cleanRecords from "@/utils/misc";
 export async function GET() {
     const ignore = ["specifications", "unlisted", "knownduplicates", "-qt", "textualcontent"];
     const boxes: object[] = [];
-    const CSVs = await glob(path.join(process.cwd(), "..", "data", "*.csv"));
+    const CSVs = await glob(path.join(process.cwd(), "../data/*.csv"));
 
     CSVs.forEach((file) => {
         if (ignore.some((i) => file.includes(i))) return;

@@ -5,10 +5,10 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FaExternalLinkAlt, FaGithub } from "react-icons/fa";
 import { FiChevronDown } from "react-icons/fi";
-import Link from "next/link";
 import { useMedia } from "react-use";
 import { usePathname } from "next/navigation";
 import type { Meta, NavItem } from ".";
+import LinkWrapper from "../LinkWrapper";
 
 const MetaContext = createContext<Meta>({} as Meta);
 
@@ -26,34 +26,6 @@ function Social({ className }: { className?: string }) {
                 <FaGithub className="text-2xl" />
             </a>
         </div>
-    );
-}
-
-function LinkWrapper({
-    children,
-    to,
-    className
-}: {
-    children: React.ReactNode;
-    to: string;
-    className?: string;
-}) {
-    if (to.includes("//"))
-        return (
-            <a
-                aria-label={`Link to ${children}`}
-                className={className}
-                href={to}
-                rel="noreferrer"
-                target="_blank"
-            >
-                {children}
-            </a>
-        );
-    return (
-        <Link aria-label={`Link to ${children}`} className={className} href={to}>
-            {children}
-        </Link>
     );
 }
 
