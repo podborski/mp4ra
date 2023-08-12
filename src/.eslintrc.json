@@ -3,11 +3,7 @@
         "browser": true,
         "es2021": true
     },
-    "plugins": [
-        "react",
-        "prettier",
-        "tailwindcss"
-    ],
+    "plugins": ["react", "prettier", "tailwindcss"],
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
@@ -23,10 +19,7 @@
         "no-console": [
             "error",
             {
-                "allow": [
-                    "warn",
-                    "error"
-                ]
+                "allow": ["warn", "error"]
             }
         ],
         "no-use-before-define": "off",
@@ -38,18 +31,14 @@
         "react/jsx-filename-extension": [
             "error",
             {
-                "extensions": [
-                    ".tsx"
-                ]
+                "extensions": [".tsx"]
             }
         ],
         // TailwindCSS
         "tailwindcss/no-custom-classname": [
             "error",
             {
-                "whitelist": [
-                    "markdown-body"
-                ]
+                "whitelist": ["markdown-body"]
             }
         ],
         // Import
