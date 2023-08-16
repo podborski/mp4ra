@@ -1,6 +1,7 @@
 name: New Codepoint Request Template
 description: Use this template to request a new codepoint to be registered in MP4RA
 title: "[New Codepoint Request] "
+labels: ["registiration"]
 body:
   - type: markdown
     attributes:
@@ -22,7 +23,7 @@ body:
     validations:
       required: true
   - type: input
-    id: address
+    id: requestor-address
     attributes:
       label: Address
       description: Address of the organization requesting the codepoint
@@ -111,7 +112,7 @@ body:
     validations:
       required: false
   - type: input
-    id: address
+    id: contact-address
     attributes:
       label: Address
       description: Address of the person to contact regarding this request
