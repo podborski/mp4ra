@@ -1,0 +1,140 @@
+name: New Codepoint Request Template
+description: Use this template to request a new codepoint to be registered in MP4RA
+title: "[New Codepoint Request] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for your interest in registering a new codepoint in MP4RA. Please fill out the following information to help us process your request.
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Requestor Information
+        Please provide the following information about the organization requesting the codepoint.
+        > This will be included in MP4RA's website and registry.
+  - type: input
+    id: name
+    attributes:
+      label: Name
+      description: Name of the organization requesting the codepoint
+      placeholder: ACME Inc.
+    validations:
+      required: true
+  - type: input
+    id: address
+    attributes:
+      label: Address
+      description: Address of the organization requesting the codepoint
+      placeholder: 123 Main St, Anytown, USA
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: URL of the organization requesting the codepoint
+      placeholder: https://acme.example.com
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Codepoint Information
+        Please provide the following information about the codepoint you are requesting.
+        > This will be included in MP4RA's website and registry.
+  - type: input
+    id: kind
+    attributes:
+      label: Kind
+      description: Kind of codepoint being requested (please choose from the set of registered types)
+      placeholder: "Sample Groups"
+    validations:
+      required: true
+  - type: input
+    id: fourcc
+    attributes:
+      label: Identifier (four-character code)
+      description: Four-character code for the codepoint being requested
+      placeholder: "sgpd"
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        > Object Type registirations do not require a four-character code.
+
+        > Note that four-character codes use four 8-bit printable characters, usually from the first 128 Unicode characters (commonly thought of as plain ASCII), but at most from the first 256 Unicode characters.
+  - type: input
+    id: specification
+    attributes:
+      label: Specification
+      description: The specification in which this code-point is defined, if possible. A copy of the specification would be appreciated, as it enables the authority to understand the registration better. If you are requesting a 'codec' code-point, a reference to the definition of the coding system itself, if separate from the definition of its storage in these files, would also be appreciated.
+      placeholder: "ISO/IEC 14496-12"
+    validations:
+      required: true
+  - type: textarea
+    id: abstract
+    attributes:
+      label: Abstract
+      description: A brief 'abstract' of the meaning of the code-point, perhaps ten to twenty words (see examples on this site)
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Contact Information
+
+        Please provide the following information about the person who should be contacted regarding this request.
+  - type: input
+    id: contact
+    attributes:
+      label: Name, Title, Organization
+      description: Name of the person to contact regarding this request
+      placeholder: John Doe, Director of Engineering, ACME Inc.
+    validations:
+      required: true
+  - type: input
+    id: email
+    attributes:
+      label: Email
+      description: Email address of the person to contact regarding this request
+    validations:
+      required: true
+  - type: input
+    id: phone
+    attributes:
+      label: Phone
+      description: Phone number of the person to contact regarding this request
+    validations:
+      required: false
+  - type: input
+    id: address
+    attributes:
+      label: Address
+      description: Address of the person to contact regarding this request
+      placeholder: 123 Main St, Anytown, USA
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Additional Information
+
+        Please provide any additional information that may be helpful in processing this request.
+  - type: input
+    id: date-of-definition
+    attributes:
+      label: Date of Definition
+      description: Date of definition of the code-point, if known
+      placeholder: 08-23-2023
+  - type: textarea
+    id: statement
+    attributes:
+      label: Statement of Intention
+      description: Statement of an intention to apply (implement) the assigned code-point
+    validations:
+      required: false

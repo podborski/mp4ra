@@ -119,7 +119,7 @@ export default function Table({ data, globalFilter }: { data: object[]; globalFi
     if (globalFilter !== undefined && globalFilter.length < 2) return null;
 
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center overflow-y-scroll">
             <table className="w-full">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (

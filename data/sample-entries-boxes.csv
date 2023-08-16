@@ -11,7 +11,7 @@ ccst,Coding Constraints,Video,HEIF
 chnl,Channel layout,Audio,ISO
 clap,Clean aperture,Video,ISO
 clli,Content Light Level,Video,ISO
-colr,Color information (see 1 below),Video,ISO
+colr,Color information (see note below),Video,ISO
 CoLL,Content Light Level Box,Video,VPxx
 dac3,Decoder specific info for AC-3 audio,Audio,ETSI AC-3
 dac4,Decoder specific info for AC-4 audio,Audio,ETSI AC-4
