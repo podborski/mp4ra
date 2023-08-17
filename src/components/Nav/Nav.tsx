@@ -20,7 +20,7 @@ function Social({ className }: { className?: string }) {
                 aria-label="Check us out on GitHub"
                 className="inline-flex items-center transition-all duration-500 hover:brightness-125"
                 href={meta.social.github}
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 target="_blank"
             >
                 <FaGithub className="text-2xl" />

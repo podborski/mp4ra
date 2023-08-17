@@ -16,7 +16,7 @@ export default function LinkWrapper({
                 aria-label={`Link to ${children}`}
                 className={className}
                 href={to}
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 target="_blank"
             >
                 {children}

@@ -68,7 +68,15 @@ export default function Table({ data, globalFilter }: { data: object[]; globalFi
             if (header === "code") {
                 return columnHelper.accessor(header, {
                     // eslint-disable-next-line react/no-danger, react/no-unstable-nested-components
-                    cell: (info) => info.getValue() && <code>{info.getValue()}</code>
+                    cell: (info) =>
+                        info.getValue() && (
+                            <a
+                                href={`${process.env.FFC_URL}?query==${info.getValue()}`}
+                                target="_blank"
+                            >
+                                <code>{info.getValue()}</code>
+                            </a>
+                        )
                 });
             }
             if (header === "category") {
@@ -120,7 +128,7 @@ export default function Table({ data, globalFilter }: { data: object[]; globalFi
 
     return (
         <div className="flex items-center overflow-y-auto">
-            <table className="w-full">
+            <table className="flex-[1]">
                 <thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <tr key={headerGroup.id}>

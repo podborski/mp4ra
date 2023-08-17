@@ -8,6 +8,7 @@ const nextConfig = {
     output: "export",
     pageExtensions: ["ts", "tsx", "mdx"],
     env: {
+        FFC_URL: "https://mpeggroup.github.io/FileFormatConformance",
         BUILD_TIMESTAMP: new Date().toLocaleString("default", {
             month: "long",
             day: "numeric",
