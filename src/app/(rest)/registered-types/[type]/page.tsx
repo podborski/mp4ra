@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { DataDisplay } from "@/components";
 
+// type is the name of the csv file in the data folder (without the .csv extension)
 export const MISC_TYPES = [
     {
         title: "Data References",
