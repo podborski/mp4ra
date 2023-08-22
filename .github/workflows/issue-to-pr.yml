@@ -1,0 +1,63 @@
+name: Create Draft PR from Registration
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  registration-pr:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'registration')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: stefanbuck/github-issue-parser@v3
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-codepoint-iso.yml
+
+      - name: Add Entry to CSV
+        shell: python
+        run: |
+          import csv, json
+
+          kind = "${{ steps.issue-parser.outputs.issueparser_kind }}"
+          with open("data/index.json", "r") as f:
+            index = json.load(f)
+            entry = index[kind]
+            if isinstance(entry, dict):
+              qt = "${{ contains(github.event.issue.labels.*.name, 'QuickTime') }}" == "true"
+              entry = entry["qt" if qt else "iso"]
+
+          needs_newline = False
+          with open("data/{}.csv".format(entry), "r") as f:
+            reader = csv.reader(f)
+            cols = len(next(reader))
+            if f.read()[-1] != "\n":
+              needs_newline = True
+
+          with open("data/{}.csv".format(entry), "a") as f:
+            if needs_newline:
+              f.write("\n")
+            writer = csv.writer(f)
+            writer.writerow(["${{ steps.issue-parser.outputs.issueparser_fourcc }}"] + [None] * (cols - 1))
+
+      - name: Create Draft PR
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: Add `${{ steps.issue-parser.outputs.issueparser_fourcc }}` to ${{ steps.issue-parser.outputs.issueparser_kind }}
+          commit-message: Add `${{ steps.issue-parser.outputs.issueparser_fourcc }}` to ${{ steps.issue-parser.outputs.issueparser_kind }}
+          body: |
+            This PR adds `${{ steps.issue-parser.outputs.issueparser_fourcc }}` to the ${{ steps.issue-parser.outputs.issueparser_kind }} registry.
+
+            This PR was created automatically by [create-pull-request](https://github.com/peter-evans/create-pull-request) based on the [registration issue](${{ github.event.issue.html_url }}).
+          branch: add-${{ steps.issue-parser.outputs.issueparser_fourcc }}
+          branch-suffix: timestamp
+          delete-branch: true
+          # draft: true
+          # assignees: podborski

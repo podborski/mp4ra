@@ -2,7 +2,7 @@ name: Check QT Registiration
 
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [opened, edited]
 
 concurrency:
   group: ${{ github.event.issue.number }}
