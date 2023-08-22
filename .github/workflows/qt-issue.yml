@@ -1,0 +1,61 @@
+name: Check QT Registiration
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+concurrency:
+  group: ${{ github.event.issue.number }}
+  cancel-in-progress: true
+
+jobs:
+  check-qt-registiration:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'QuickTime')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: stefanbuck/github-issue-parser@v3
+        id: issue-parser
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-codepoint-qt.yml
+
+      - name: Check QT Registiration
+        id: check-qt-registiration
+        run: |
+          fourcc=${{ steps.issue-parser.outputs.issueparser_fourcc }}
+          if [[ ! $fourcc =~ ^[A-Z0-9]{4}$ ]]; then
+              echo "fails=1" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment-author: "github-actions[bot]"
+          body-includes: invalid codepoint
+
+      - name: Create comment
+        if: |
+          steps.fc.outputs.comment-id == '' && steps.check-qt-registiration.outputs.fails == '1'
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            This registiration request has invalid codepoint identifier. Please make sure the identifier is 4 characters long and only contains uppercase letters and numbers.
+            - [ ] Correct identifier provided
+
+      - name: Update comment
+        uses: peter-evans/create-or-update-comment@v3
+        if: |
+          steps.fc.outputs.comment-id != '' && steps.check-qt-registiration.outputs.fails != '1'
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            This registiration request has invalid codepoint identifier. Please make sure the identifier is 4 characters long and only contains uppercase letters and numbers.
+            - [x] Correct identifier provided
+          edit-mode: replace
+          reactions: rocket

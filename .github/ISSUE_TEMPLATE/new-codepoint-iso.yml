@@ -1,7 +1,7 @@
-name: New Codepoint Request Template
+name: New ISO Codepoint Request Template
 description: Use this template to request a new codepoint to be registered in MP4RA
 title: "[New Codepoint Request] "
-labels: ["registration"]
+labels: ["registration", "ISO"]
 body:
   - type: markdown
     attributes:
@@ -51,7 +51,29 @@ body:
       label: Kind
       description: Kind of codepoint being requested (please choose from the set of registered types)
       options:
-        - TODO
+        - Boxes
+        - Checksum Types
+        - Handlers
+        - Track References
+        - Data References
+        - Item Properties
+        - Multiview Attributes
+        - Sample Groups
+        - Track Selection Types
+        - Brands
+        - Sample Entry Types
+        - Sample Entry Boxes
+        - Metadata Item Types
+        - Metadata Item Properties
+        - Object Types
+        - Stream Types
+        - Color Types
+        - Entity Group Types
+        - Item References
+        - Protection and Restricted Schemes
+        - Track Group Types
+        - User Data Boxes
+      default: 0
     validations:
       required: true
   - type: input
@@ -59,7 +81,7 @@ body:
     attributes:
       label: Identifier (four-character code)
       description: Four-character code for the codepoint being requested
-      placeholder: "sgpd"
+      placeholder: "moof"
     validations:
       required: true
   - type: markdown
@@ -107,23 +129,19 @@ body:
     attributes:
       label: Email
       description: Email address of the person to contact regarding this request
-    validations:
-      required: true
+      placeholder: john@apple.com
   - type: input
     id: phone
     attributes:
       label: Phone
       description: Phone number of the person to contact regarding this request
-    validations:
-      required: false
+      placeholder: +1 (555) 555-5555
   - type: input
     id: contact-address
     attributes:
       label: Address
       description: Address of the person to contact regarding this request
       placeholder: 123 Main St, Anytown, USA
-    validations:
-      required: false
 
   - type: markdown
     attributes:
@@ -142,5 +160,3 @@ body:
     attributes:
       label: Statement of Intention
       description: Statement of an intention to apply (implement) the assigned code-point
-    validations:
-      required: false
