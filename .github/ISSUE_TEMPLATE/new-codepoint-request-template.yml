@@ -45,12 +45,13 @@ body:
         ## Codepoint Information
         Please provide the following information about the codepoint you are requesting.
         > This will be included in MP4RA's website and registry.
-  - type: input
+  - type: dropdown
     id: kind
     attributes:
       label: Kind
       description: Kind of codepoint being requested (please choose from the set of registered types)
-      placeholder: "Sample Groups"
+      options:
+        - TODO
     validations:
       required: true
   - type: input
@@ -72,9 +73,11 @@ body:
     attributes:
       label: Specification
       description: The specification in which this code-point is defined, if possible. A copy of the specification would be appreciated, as it enables the authority to understand the registration better. If you are requesting a 'codec' code-point, a reference to the definition of the coding system itself, if separate from the definition of its storage in these files, would also be appreciated.
-      placeholder: "ISO/IEC 14496-12"
-    validations:
-      required: true
+      placeholder: "Link to your specification (if available)"
+  - type: markdown
+    attributes:
+      value: |
+        > If your specification is not in a public domain you can still share it with MP4RA by sending an email to mp4reg [at] group.apple.com including a link to this issue.
   - type: textarea
     id: abstract
     attributes:
@@ -89,6 +92,8 @@ body:
         ## Contact Information
 
         Please provide the following information about the person who should be contacted regarding this request.
+
+        **NOTE: If you are okay with providing your contact information through this GitHub issue please feel free to do so. If you are not okay with your contact information to be shared, please leave it blank and send an email to mp4reg [at] group.apple.com including a link to this issue.**
   - type: input
     id: contact
     attributes:
